@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="ie8,java,web开发," />
+  <meta name="keywords" content="git," />
 
 
 
@@ -39,18 +39,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="在Web应用中经常需要下载文件功能，Excel/TXT/Zip 等等，一般都直接用 HttpServletResponse 输出了，一直也没什么问题。最近突然有用户反馈在 IE8下无法下载，提示：Internet Explorer无法打开该Internet站点.请求的站点不可用,或找不到.请以后再试.">
+<meta name="description" content="好久没有写博客啦，最近正好长假。想着更新下，结果发现换了电脑以后没有配置环境，各种报错。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java Web 应用在IE8下无法下载文件的问题">
-<meta property="og:url" content="http://jacob110.github.io/2015/10/13/java-ie8-cannot-download/index.html">
+<meta property="og:title" content="Git remote push 报错">
+<meta property="og:url" content="http://jacob110.github.io/2016/10/08/git-remote-push-error-md/index.html">
 <meta property="og:site_name" content="Jacob's Notes">
-<meta property="og:description" content="在Web应用中经常需要下载文件功能，Excel/TXT/Zip 等等，一般都直接用 HttpServletResponse 输出了，一直也没什么问题。最近突然有用户反馈在 IE8下无法下载，提示：Internet Explorer无法打开该Internet站点.请求的站点不可用,或找不到.请以后再试.">
-<meta property="og:image" content="http://7xngxf.com1.z0.glb.clouddn.com/down-001.png">
-<meta property="og:image" content="http://7xngxf.com1.z0.glb.clouddn.com/down-002.png">
-<meta property="og:updated_time" content="2016-10-08T03:48:56.011Z">
+<meta property="og:description" content="好久没有写博客啦，最近正好长假。想着更新下，结果发现换了电脑以后没有配置环境，各种报错。">
+<meta property="og:updated_time" content="2016-10-08T09:04:32.807Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java Web 应用在IE8下无法下载文件的问题">
-<meta name="twitter:description" content="在Web应用中经常需要下载文件功能，Excel/TXT/Zip 等等，一般都直接用 HttpServletResponse 输出了，一直也没什么问题。最近突然有用户反馈在 IE8下无法下载，提示：Internet Explorer无法打开该Internet站点.请求的站点不可用,或找不到.请以后再试.">
+<meta name="twitter:title" content="Git remote push 报错">
+<meta name="twitter:description" content="好久没有写博客啦，最近正好长假。想着更新下，结果发现换了电脑以后没有配置环境，各种报错。">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -60,7 +58,7 @@
   };
 </script>
 
-    <title> Java Web 应用在IE8下无法下载文件的问题 // Jacob's Notes </title>
+    <title> Git remote push 报错 // Jacob's Notes </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -200,7 +198,7 @@
           
           
             
-              Java Web 应用在IE8下无法下载文件的问题
+              Git remote push 报错
             
           
         </h1>
@@ -209,8 +207,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-13T21:26:07+08:00" content="2015-10-13">
-            2015-10-13
+          <time itemprop="dateCreated" datetime="2016-10-08T16:43:25+08:00" content="2016-10-08">
+            2016-10-08
           </time>
         </span>
 
@@ -218,7 +216,7 @@
           <span class="post-category" >
             &nbsp; | &nbsp; 分类于
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java-Web/" itemprop="url" rel="index"><span itemprop="name">Java Web</span></a></span>
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a></span>
 
               
               
@@ -231,8 +229,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/10/13/java-ie8-cannot-download/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/13/java-ie8-cannot-download/" itemprop="commentsCount"></span>
+              <a href="/2016/10/08/git-remote-push-error-md/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/08/git-remote-push-error-md/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -246,20 +244,19 @@
       
 
       
-        <span itemprop="articleBody"><p>在Web应用中经常需要下载文件功能，Excel/TXT/Zip 等等，一般都直接用 <code>HttpServletResponse</code> 输出了，一直也没什么问题。最近突然有用户反馈在 IE8下无法下载，提示：Internet Explorer无法打开该Internet站点.请求的站点不可用,或找不到.请以后再试.<br><a id="more"></a><br>提示错误如下图，看着都心烦啊，<br><img src="http://7xngxf.com1.z0.glb.clouddn.com/down-001.png" alt=""></p>
-<p>开始找问题，原始的代码如下</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> OutputZip(HttpServletResponse response,String localZipFile) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="keyword">File</span> f = <span class="keyword">new</span> <span class="keyword">File</span>(localZipFile);</span><br><span class="line">    <span class="keyword">if</span> (!f.exists()) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    String downloadFileName = f.getName();</span><br><span class="line">    f = <span class="keyword">null</span>;</span><br><span class="line">    response.setContentType(<span class="string">"application/x-zip-compressed"</span>);</span><br><span class="line">    response.setHeader(<span class="string">"Location"</span>, downloadFileName);</span><br><span class="line">    response.setHeader(<span class="string">"Cache-Control"</span>, <span class="string">"max-age=-1"</span>);</span><br><span class="line">    response.setHeader(<span class="string">"Content-Disposition"</span>, <span class="string">"attachment; filename="</span> + downloadFileName);</span><br><span class="line">    OutputStream outputStream = response.getOutputStream();</span><br><span class="line">    InputStream inputStream = <span class="keyword">new</span> FileInputStream(localZipFile);</span><br><span class="line">    response.setContentLength(inputStream.available());</span><br><span class="line">    <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">    <span class="keyword">int</span> i = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> ((i = inputStream.<span class="keyword">read</span>(buffer)) != -<span class="number">1</span>) &#123;</span><br><span class="line">        outputStream.<span class="keyword">write</span>(buffer, <span class="number">0</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    outputStream.flush();</span><br><span class="line">    outputStream.close();</span><br><span class="line">    inputStream.close();</span><br><span class="line">    outputStream = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>调了半天，发现本地开发环境和预发布环境都没有问题，当然其他浏览器Chrome和FF下也没有问题。一发布到生产环境就出错了，捉急啊。<br>Google了半天，试了半天也不行，最后猜测是 <code>response</code> 输出时设置的问题，就是下面这几行代码：</p>
-<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">response.<span class="built_in">set</span>ContentType(<span class="string">"application/x-zip-compressed"</span>);        response.<span class="built_in">set</span>Header(<span class="string">"Location"</span>, downloadFileName);</span><br><span class="line">response.<span class="built_in">set</span>Header(<span class="string">"Cache-Control"</span>, <span class="string">"max-age=-1"</span>);</span><br><span class="line">response.<span class="built_in">set</span>Header(<span class="string">"Content-Disposition"</span>, <span class="string">"attachment; filename="</span> + downloadFileName);</span><br></pre></td></tr></table></figure>
-<p>于是乎把 <code>contentType</code> 的设置去掉了，也就是这行</p>
-<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response.<span class="built_in">set</span>ContentType(<span class="string">"application/x-zip-compressed"</span>);</span><br></pre></td></tr></table></figure>
-<p>结果居然对了,正常显示是这样的</p>
-<p><img src="http://7xngxf.com1.z0.glb.clouddn.com/down-002.png" alt=""></p>
-<p>真是坑爹啊，调了一下午啊啊,居然就注释掉一行代码就好了，擦泪。</p>
-<p>问题虽然解决，但是具体的原因不知道是，为啥这么改也不知道，求大神赐教!</p>
-<p>相关类似的其他问题<br><a href="http://stackoverflow.com/questions/6573524/ie-cannot-download-files-over-ssl-served-by-websphere" target="_blank" rel="external">IE cannot download files over SSL served by WebSphere</a></p>
-<p><a href="http://stackoverflow.com/questions/3415370/ie-unable-to-download-from-unable-to-open-this-internet-site-the-request?rq=1" target="_blank" rel="external">IE : Unable to download <em> from </em>. Unable to open this Internet site. The requested site is either unavailable or cannot be found</a></p>
-<p><a href="http://jerval.iteye.com/blog/2037062" target="_blank" rel="external">Internet Explorer无法打开该Internet站点.请求的站点不可用,或找不到.请以后再试.</a></p>
+        <span itemprop="articleBody"><p>好久没有写博客啦，最近正好长假。想着更新下，结果发现换了电脑以后没有配置环境，各种报错。</p>
+<a id="more"></a>
+<h3 id="Git提交到Github报错">Git提交到Github报错</h3><p>错误信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">To git@github.com:Jacob110/blog-source.git</span><br><span class="line"> ! [rejected]        master -&gt; master (non-fast-forward)</span><br><span class="line">error: failed to push some refs to <span class="string">'git@github.com:Jacob110/blog-source.git'</span></span><br><span class="line">hint: Updates were rejected because the tip of your current branch is behind</span><br><span class="line">hint: its remote counterpart. Integrate the remote changes (e.g.</span><br><span class="line">hint: <span class="string">'git pull ...'</span>) before pushing again.</span><br><span class="line">hint: See the <span class="string">'Note about fast-forwards'</span> <span class="keyword">in</span> <span class="string">'git push --help'</span> <span class="keyword">for</span> details.</span><br></pre></td></tr></table></figure>
+<p>根据提示，push前需要先更新下远程代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git pull origin master</span><br><span class="line">From github.com:Jacob110/blog-source</span><br><span class="line"> * branch            master     -&gt; FETCH_HEAD</span><br><span class="line"> * [new branch]      master     -&gt; origin/master</span><br><span class="line">Merge made by the <span class="string">'recursive'</span> strategy.</span><br><span class="line"> README.md | <span class="number">2</span> ++</span><br><span class="line"> <span class="number">1</span> file changed, <span class="number">2</span> insertions(+)</span><br><span class="line"> create mode <span class="number">100644</span> README.md</span><br></pre></td></tr></table></figure>
+<p>提交代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure>
+<h3 id="其他异常">其他异常</h3><p>Git Bash 下设置多个Github账号时，添加ssh key提示如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Jacob@Jacob-PC MINGW64 ~/.ssh</span><br><span class="line">$ ssh-add</span><br><span class="line">Could not open a connection to your authentication agent.</span><br></pre></td></tr></table></figure>
+<p>需要执行如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">eval</span> `ssh-agent`</span><br><span class="line">Agent pid <span class="number">6860</span></span><br></pre></td></tr></table></figure>
+<p>好了，可以愉快的写博客了。</p>
 </span>
       
     </div>
@@ -268,11 +265,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ie8/" rel="tag">#ie8</a>
-          
-            <a href="/tags/java/" rel="tag">#java</a>
-          
-            <a href="/tags/web开发/" rel="tag">#web开发</a>
+            <a href="/tags/git/" rel="tag">#git</a>
           
         </div>
       
@@ -281,13 +274,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/13/mac-os-install-mysql5-7/" rel="prev">Mac OS X 下安装MySQL 5.7</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/24/Java-WebService-JAX-WS-SOAP/" rel="next">JAX-WS (SOAP) 开发 WebService</a>
+              <a href="/2016/10/08/hello-world/" rel="next">Hello World</a>
             
           </div>
         </div>
@@ -302,10 +293,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/10/13/java-ie8-cannot-download/"
-     data-title="Java Web 应用在IE8下无法下载文件的问题"
+        <div class="ds-share flat" data-thread-key="2016/10/08/git-remote-push-error-md/"
+     data-title="Git remote push 报错"
      data-content=""
-     data-url="http://jacob110.github.io/2015/10/13/java-ie8-cannot-download/">
+     data-url="http://jacob110.github.io/2016/10/08/git-remote-push-error-md/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -332,8 +323,8 @@
             
               <div class="comments" id="comments">
                 
-                  <div class="ds-thread" data-thread-key="2015/10/13/java-ie8-cannot-download/"
-                       data-title="Java Web 应用在IE8下无法下载文件的问题" data-url="http://jacob110.github.io/2015/10/13/java-ie8-cannot-download/">
+                  <div class="ds-thread" data-thread-key="2016/10/08/git-remote-push-error-md/"
+                       data-title="Git remote push 报错" data-url="http://jacob110.github.io/2016/10/08/git-remote-push-error-md/">
                   </div>
                 
               </div>
@@ -442,7 +433,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git提交到Github报错"><span class="nav-number">1.</span> <span class="nav-text">Git提交到Github报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他异常"><span class="nav-number">2.</span> <span class="nav-text">其他异常</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
