@@ -1,0 +1,808 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+  <meta name="google-site-verification" content="6KKgdF0sQ3cUZxd9mIn2hDqLQVPMKz6EZDY3cH6SrrM" />
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+    <meta name="description" content="明天是你剩余人生的第一天" />
+
+
+
+  <meta name="keywords" content="docker,linux,vm,应用服务器," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Win7下Docker安装及使用">
+<meta property="og:url" content="http://jacob110.github.io/2017/03/31/windows-install-docker/index.html">
+<meta property="og:site_name" content="Jacob's Notes">
+<meta property="og:description">
+<meta property="og:image" content="http://7xngxf.com1.z0.glb.clouddn.com/docker-logo.jpg">
+<meta property="og:image" content="http://7xngxf.com1.z0.glb.clouddn.com/docker-tomcat.png">
+<meta property="og:updated_time" content="2017-03-31T10:06:27.793Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Win7下Docker安装及使用">
+<meta name="twitter:description">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Win7下Docker安装及使用 // Jacob's Notes </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-67694296-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6eb2629b686364cda412b01163cddcea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Jacob's Notes</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+<form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'guZMoFXzXEM3g5n8d9RX','2.0.0');
+</script>
+
+<div class="site-search-toggle"></div>
+    </div>
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Win7下Docker安装及使用
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2017-03-31T17:50:37+08:00" content="2017-03-31">
+            2017-03-31
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
+
+              
+              
+                ， 
+              
+
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Docker/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2017/03/31/windows-install-docker/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/31/windows-install-docker/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><img src="http://7xngxf.com1.z0.glb.clouddn.com/docker-logo.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="Docker_简介">Docker 简介</h2><p>Docker 是一个开源的应用容器引擎，可以自动化地部署应用到可移植的的容器中，这些容器独立于硬件、语言、框架、打包系统。一个标准的Docker容器包含一个软件组件及其所有的依赖——二进制文件、库、配置文件、脚本等等。Docker扩展了LXC，使用高层的API，提供轻量虚拟化解决方案来实现进程间隔离。</p>
+<h2 id="Docker_安装">Docker 安装</h2><p>简单记录下Win7下安装Docker。官网给出的是在Win10下的安装文档，在Win7下还是有些差别。</p>
+<h3 id="安装_ToolBox">安装 ToolBox</h3><p>下载 ToolBox，地址 <a href="https://github.com/docker/toolbox/releases" target="_blank" rel="external">https://github.com/docker/toolbox/releases</a></p>
+<p>建议使用 <code>DockerToolbox-1.12.6</code>,否则会报一下错误：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">level=warning msg="Unable to <span class="operator"><span class="keyword">use</span> <span class="keyword">system</span> certificate pool: crypto/x509: <span class="keyword">system</span> root pool <span class="keyword">is</span> <span class="keyword">not</span> available <span class="keyword">on</span> Windows<span class="string">"</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="加载_boot2docker">加载 boot2docker</h3><p>安装完 <code>DockerToolBox</code> ，首次启动 <code>Docker Quickstart Terminal</code>，会从 <code>github</code> 拉去 <code>boot2docker</code> 的镜像，会比较慢，也有可能下载失败。这里建议先去 <code>github</code> 下载镜像文件，再手动加载到 <code>Toolbox</code>。</p>
+<p>下载地址 <a href="https://github.com/boot2docker/boot2docker/releases" target="_blank" rel="external">https://github.com/boot2docker/boot2docker/releases</a></p>
+<p>将下载的 <code>boot2docker.iso</code> 复制到 <code>%MACHINE_STORAGE_PATH%/\cache</code> 这个目录下，<code>MACHINE_STORAGE_PATH</code> 这个默认目录为 <code>C:\Users\%username%\.docker\machine\</code></p>
+<p>再次启动 <code>Docker Quickstart Terminal</code>，会自动创建默认虚拟机 <code>default</code>, 创建完成后如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">                        <span class="comment">##         .</span></span><br><span class="line">                  <span class="comment">## ## ##        ==</span></span><br><span class="line">               <span class="comment">## ## ## ## ##    ===</span></span><br><span class="line">           /<span class="string">""""""</span><span class="string">""""""</span><span class="string">"""""\___/ ===</span><br><span class="line">      ~~·~ &#123;~~ ~~·~~ ~·~~ ~~·~~ ~·~~ ~ /  ===- ~·~~</span><br><span class="line">           \______ o           __/</span><br><span class="line">             \    \         __/</span><br><span class="line">              \____\_______/</span><br><span class="line">docker is configured to use the default machine with IP 192.168.99.100</span><br><span class="line">For help getting started, check out the docs at https://docs.docker.com</span><br><span class="line"></span><br><span class="line">Start interactive shell</span><br><span class="line"></span><br><span class="line">Jacob@Jacob-PC MINGW64 ~</span><br><span class="line">$</span></span><br></pre></td></tr></table></figure>
+<h3 id="Docker-Machine">Docker-Machine</h3><p>简单命令操作</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Jacob@Jacob-PC MINGW64 ~</span><br><span class="line">$ docker-machine -v</span><br><span class="line">docker-machine.exe version <span class="number">0.8</span><span class="number">.2</span>, build e18a919</span><br><span class="line"></span><br><span class="line">Jacob@Jacob-PC MINGW64 ~</span><br><span class="line">$ docker-machine ip</span><br><span class="line"><span class="number">192.168</span><span class="number">.99</span><span class="number">.100</span></span><br><span class="line"></span><br><span class="line">Jacob@Jacob-PC MINGW64 ~</span><br><span class="line">$ docker-machine ls</span><br><span class="line">NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS</span><br><span class="line"><span class="keyword">default</span>   -        virtualbox   Running   tcp:<span class="comment">//192.168.99.100:2376           v17.03.0-ce</span></span><br></pre></td></tr></table></figure>
+<h2 id="Docker_使用">Docker 使用</h2><p><code>Windows</code> 下默认的 <code>terminal</code> 不太好用，可以用 <code>ssh</code> 连接工具来操作。默认ip <code>192.168.99.100</code> ，默认用户名/密码 <code>docker/tcuser</code></p>
+<p>登录成功后：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">                        <span class="comment">##         .</span></span><br><span class="line">                  <span class="comment">## ## ##        ==</span></span><br><span class="line">               <span class="comment">## ## ## ## ##    ===</span></span><br><span class="line">           /<span class="string">""""""</span><span class="string">""""""</span><span class="string">"""""\___/ ===</span><br><span class="line">      ~~·~ &#123;~~ ~~·~~ ~·~~ ~~·~~ ~·~~ ·~ /  ===- ~·~~</span><br><span class="line">           \______ o           __/</span><br><span class="line">             \    \         __/</span><br><span class="line">              \____\_______/</span><br><span class="line"> _                 _   ____     _            _</span><br><span class="line">| |__   ___   ___ | |_|___ \ __| | ___   ___| | _____ _ __</span><br><span class="line">| '_ \ / _ \ / _ \| __| __) / _` |/ _ \ / __| |/ / _ \ '__|</span><br><span class="line">| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &lt;  __/ |</span><br><span class="line">|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|</span><br><span class="line">Boot2Docker version 17.03.0-ce, build HEAD : f11a204 - Thu Mar  2 00:14:47 UTC 2017</span><br><span class="line">Docker version 17.03.0-ce, build 3a232c8</span><br><span class="line">docker@default:~$</span></span><br></pre></td></tr></table></figure>
+<p>依据官网上的 get started，先来输出 <code>hello world</code> </p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker run hello-world</span><br><span class="line"></span><br><span class="line">Hello <span class="built_in">from</span> Docker!</span><br><span class="line">This message shows that your installation appears <span class="built_in">to</span> be working correctly.</span><br><span class="line"></span><br><span class="line">To generate this message, Docker took <span class="operator">the</span> following steps:</span><br><span class="line"> <span class="number">1.</span> The Docker client contacted <span class="operator">the</span> Docker daemon.</span><br><span class="line"> <span class="number">2.</span> The Docker daemon pulled <span class="operator">the</span> <span class="string">"hello-world"</span> image <span class="built_in">from</span> <span class="operator">the</span> Docker Hub.</span><br><span class="line"> <span class="number">3.</span> The Docker daemon created <span class="operator">a</span> <span class="built_in">new</span> container <span class="built_in">from</span> that image which runs <span class="operator">the</span></span><br><span class="line">    executable that produces <span class="operator">the</span> output you are currently reading.</span><br><span class="line"> <span class="number">4.</span> The Docker daemon streamed that output <span class="built_in">to</span> <span class="operator">the</span> Docker client, which sent <span class="keyword">it</span></span><br><span class="line">    <span class="built_in">to</span> your terminal.</span><br><span class="line"></span><br><span class="line">To <span class="keyword">try</span> something more ambitious, you can run <span class="operator">an</span> Ubuntu container <span class="operator">with</span>:</span><br><span class="line"> $ docker run -<span class="keyword">it</span> ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, <span class="operator">and</span> more <span class="operator">with</span> <span class="operator">a</span> free Docker ID:</span><br><span class="line"> <span class="keyword">https</span>://cloud.docker.com/</span><br><span class="line"></span><br><span class="line">For more examples <span class="operator">and</span> ideas, visit:</span><br><span class="line"> <span class="keyword">https</span>://docs.docker.com/engine/userguide/</span><br></pre></td></tr></table></figure>
+<p>接下来，运行其他镜像 </p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker run docker/whalesay cowsay boo</span><br><span class="line">Unable <span class="built_in">to</span> find image <span class="string">'docker/whalesay:latest'</span> locally</span><br><span class="line">docker: Error response <span class="built_in">from</span> daemon: Get <span class="keyword">https</span>://registry-<span class="number">1.</span>docker.io/v2/docker/whalesay/manifests/latest: Get <span class="keyword">https</span>://auth.docker.io/<span class="keyword">token</span>?scope=repository%<span class="number">3</span>Adocker%<span class="number">2</span>Fwhalesay%<span class="number">3</span>Apull&amp;service=registry.docker.io: <span class="built_in">read</span> tcp <span class="number">10.0</span><span class="number">.2</span><span class="number">.15</span>:<span class="number">37298</span>-&gt;<span class="number">50.17</span><span class="number">.62</span><span class="number">.194</span>:<span class="number">443</span>: <span class="built_in">read</span>: connection reset <span class="keyword">by</span> peer.</span><br></pre></td></tr></table></figure>
+<p><code>docker run</code> 会先从本地镜像列表查找，如果没有会从远程镜像仓库拉取。</p>
+<p>上面的报错信息是网络问题，多试几次。成功如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker run docker/whalesay cowsay boo</span><br><span class="line">Unable to find image <span class="string">'docker/whalesay:latest'</span> locally</span><br><span class="line">latest: Pulling <span class="keyword">from</span> docker/whalesay</span><br><span class="line">e190868d63f8: Pull complete </span><br><span class="line"><span class="number">909</span>cd34c6fd7: Pull complete </span><br><span class="line"><span class="number">0</span>b9bfabab7c1: Pull complete </span><br><span class="line">a3ed95caeb02: Pull complete </span><br><span class="line"><span class="number">00</span>bf65475aba: Pull complete </span><br><span class="line">c57b6bcc83e3: Pull complete </span><br><span class="line"><span class="number">8978</span>f6879e2f: Pull complete </span><br><span class="line"><span class="number">8</span>eed3712d2cf: Pull complete </span><br><span class="line">Digest: sha256:<span class="number">178598e51</span>a26abbc958b8a2e48825c90bc22e641de3d31e18aaf55f3258ba93b</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> docker/whalesay:latest</span><br><span class="line"> _____ </span><br><span class="line">&lt; boo &gt;</span><br><span class="line"> ----- </span><br><span class="line">    \</span><br><span class="line">     \</span><br><span class="line">      \     </span><br><span class="line">                    <span class="comment">##        .            </span></span><br><span class="line">              <span class="comment">## ## ##       ==            </span></span><br><span class="line">           <span class="comment">## ## ## ##      ===            </span></span><br><span class="line">       /<span class="string">""""""</span><span class="string">""""""</span><span class="string">""""___/ ===        </span><br><span class="line">  ~~~ &#123;~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~   </span><br><span class="line">       \______ o          __/            </span><br><span class="line">        \    \        __/             </span><br><span class="line">          \____\______/</span></span><br></pre></td></tr></table></figure>
+<p>查看本地镜像列表 <code>docker images</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~$ docker images</span><br><span class="line">REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">hello-world             latest              <span class="number">48</span>b5124b2768        <span class="number">2</span> months ago        <span class="number">1.84</span> kB</span><br><span class="line">docker/whalesay         latest              <span class="number">6</span>b362a9f73eb        <span class="number">22</span> months ago       <span class="number">247</span> MB</span><br></pre></td></tr></table></figure>
+<p>查看进程列表 <code>docker ps -a</code></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker ps -<span class="tag">a</span></span><br><span class="line">CONTAINER ID   IMAGE               COMMAND              CREATED              STATUS                          PORTS     NAMES</span><br><span class="line">ebe86aabc4b2   docker/whalesay     <span class="string">"/bin/bash"</span>          About <span class="tag">a</span> minute ago   Exited (<span class="number">0</span>) About <span class="tag">a</span> minute ago             wizardly_snyder</span><br><span class="line"><span class="number">49</span>ee5b1f06db   hello-world         <span class="string">"/hello"</span>             <span class="number">11</span> minutes ago       Exited (<span class="number">0</span>) <span class="number">11</span> minutes ago                 musing_poincare</span><br><span class="line"><span class="number">9</span>a27285ccffa   tomcat              <span class="string">"catalina.sh run"</span>    <span class="number">45</span> hours ago         Exited (<span class="number">143</span>) <span class="number">25</span> hours ago                 tomcat</span><br><span class="line"><span class="number">60</span>ec6ed6df21   nginx               <span class="string">"/bin/bash"</span>          <span class="number">7</span> days ago           Exited (<span class="number">0</span>) <span class="number">7</span> days ago                     vigilant_cray</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>CONTAINER ID</code>    运行容器 id ,唯一标识</li>
+<li><code>IMAGE</code>            运行容器来源镜像</li>
+<li><code>COMMAND</code>            以什么方式运行</li>
+<li><code>CREATED</code>            运行时间</li>
+<li><code>STATUS</code>            运行状态，<code>Exited</code> 为非运行状态，<code>Up</code> 为运行状态</li>
+<li><code>PORTS</code>            运行端口，运行时指定， <code>-p [port]</code></li>
+<li><code>NAMES</code>            容器名称，运行时指定， <code>--name [name]</code></li>
+</ul>
+<p>如果只查看正在运行的容器，<code>docker ps</code></p>
+<p>查找镜像 <code>docker search</code></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">root@default:/<span class="comment"># docker search tomcat</span></span><br><span class="line">NAME                           DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED</span><br><span class="line">tomcat                         Apache Tomcat <span class="keyword">is</span> an open source implementa...   <span class="number">1259</span>      [OK]       </span><br><span class="line">dordoka/tomcat                 Ubuntu <span class="number">14.04</span>, Oracle JDK <span class="number">8</span> <span class="keyword">and</span> Tomcat <span class="number">8</span> ba...   <span class="number">33</span>                   [OK]</span><br><span class="line">davidcaste/alpine-tomcat       Apache Tomcat <span class="number">7</span>/<span class="number">8</span> using Oracle Java <span class="number">7</span>/<span class="number">8</span> wi...   <span class="number">17</span>                   [OK]</span><br><span class="line">cloudesire/tomcat              Tomcat server, <span class="number">6</span>/<span class="number">7</span>/<span class="number">8</span>                            <span class="number">14</span>                   [OK]</span><br><span class="line">andreptb/tomcat                Debian Jessie based image <span class="keyword">with</span> Apache Tomc...   <span class="number">6</span>                    [OK]</span><br><span class="line">openweb/oracle-tomcat          A fork off <span class="keyword">of</span> Official tomcat image <span class="keyword">with</span> O...   <span class="number">5</span>                    [OK]</span><br><span class="line">fbrx/tomcat                    Minimal Tomcat image based <span class="function_start"><span class="keyword">on</span></span> Alpine Linux      <span class="number">4</span>                    [OK]</span><br><span class="line">bitnami/tomcat                 Bitnami Tomcat Docker Image                     <span class="number">1</span>                    [OK]</span><br><span class="line">cloudunit/tomcat-<span class="number">9</span>             tomcat-<span class="number">9</span>                                        <span class="number">1</span>                    [OK]</span><br><span class="line">abzcoding/tomcat-redis         a tomcat container <span class="keyword">with</span> redis <span class="keyword">as</span> session m...   <span class="number">1</span>                    [OK]</span><br><span class="line">picoded/tomcat                 tomcat <span class="number">8</span> <span class="keyword">with</span> java <span class="number">8</span>, <span class="keyword">and</span> MANAGER_USER / M...   <span class="number">1</span>                    [OK]</span><br><span class="line">camptocamp/tomcat-logback      Docker image <span class="keyword">for</span> tomcat <span class="keyword">with</span> logback integ...   <span class="number">1</span>                    [OK]</span><br><span class="line">antoineco/tomcat-mod_cluster   Apache Tomcat <span class="keyword">with</span> JBoss mod_cluster            <span class="number">1</span>                    [OK]</span><br><span class="line">antoineco/tomcat               Extra OS variants <span class="keyword">for</span> <span class="keyword">the</span> official Tomcat ...   <span class="number">0</span>                    [OK]</span><br><span class="line">muicoder/tomcat                Tomcat <span class="number">6</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">9</span>                                  <span class="number">0</span>                    [OK]</span><br><span class="line">blueur/tomcat                  Tomcat <span class="keyword">with</span> <span class="keyword">the</span> possibility <span class="keyword">to</span> <span class="keyword">set</span> <span class="keyword">the</span> use...   <span class="number">0</span>                    [OK]</span><br><span class="line">steigr/tomcat                  Apache Tomcat based <span class="function_start"><span class="keyword">on</span></span> Alpine Linux <span class="keyword">with</span> l...   <span class="number">0</span>                    [OK]</span><br><span class="line">charlycoste/tomcat             Debian based Tomcat (don't use <span class="keyword">it</span>, this <span class="keyword">is</span>...   <span class="number">0</span>                    [OK]</span><br><span class="line">oriaks/tomcat                  Tomcat                                          <span class="number">0</span>                    [OK]</span><br><span class="line">maxird/tomcat                  Tomcat                                          <span class="number">0</span>                    [OK]</span><br><span class="line">inspectit/tomcat               Tomcat <span class="keyword">with</span> inspectIT                           <span class="number">0</span>                    [OK]</span><br><span class="line">davidcaste/debian-tomcat       Yet another Debian Docker image <span class="keyword">for</span> Tomcat...   <span class="number">0</span>                    [OK]</span><br><span class="line">dianplus/tomcat                Tomcat base image maintained <span class="keyword">by</span> dianjia.io.     <span class="number">0</span>                    [OK]</span><br><span class="line">cheewai/tomcat                 Tomcat <span class="keyword">and</span> Oracle JRE <span class="keyword">in</span> docker                 <span class="number">0</span>                    [OK]</span><br><span class="line">phpmentors/tomcat-app          Tomcat <span class="type">application</span> image using Maven            <span class="number">0</span>                    [OK]</span><br></pre></td></tr></table></figure>
+<p>从远程仓库拉取镜像 <code>docker pull</code></p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">docker pull</span><br><span class="line"></span><br><span class="line">root@default:/<span class="preprocessor"># docker pull tomcat</span></span><br><span class="line">Using default tag: latest</span><br><span class="line"><span class="label">latest:</span> Pulling from library/tomcat</span><br><span class="line"><span class="number">6</span>d827a3ef358: Pull complete </span><br><span class="line"><span class="number">2726297</span>beaf1: Pull complete </span><br><span class="line"><span class="label">d6e483851652:</span> Pull complete </span><br><span class="line"><span class="number">0</span>ab260573986: Pull complete </span><br><span class="line"><span class="label">b7c48cee0b2b:</span> Pull complete </span><br><span class="line"><span class="number">1368</span>ab15aa1c: Pull complete </span><br><span class="line"><span class="label">e4b9c85c3e06:</span> Pull complete </span><br><span class="line"><span class="label">ee3dc5d1e4c7:</span> Pull complete </span><br><span class="line"><span class="label">e101174ccdbd:</span> Pull complete </span><br><span class="line"><span class="label">c2314a094b7b:</span> Pull complete </span><br><span class="line"><span class="label">a9d5ec3c3ff3:</span> Pull complete </span><br><span class="line"><span class="label">Digest:</span> sha256:a45d6a36ed6e66d7cd485cfec97a2b54254924542038802323fa42a74e9423b0</span><br><span class="line"><span class="label">Status:</span> Downloaded newer image for tomcat:latest</span><br></pre></td></tr></table></figure>
+<p>运行 <code>tomcat</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@<span class="keyword">default</span>:/<span class="preprocessor"># docker run -p <span class="number">8080</span>:<span class="number">8080</span> -d --name tomcat tomcat</span></span><br><span class="line"><span class="number">9</span>a27285ccffaf06e618e634489cd9f019f3df069e994314e8731bac62cd5bb3b</span><br></pre></td></tr></table></figure>
+<p><code>-d</code> 为后台运行，<code>--name</code> 为容器指定别名，这里指定为 <code>tomcat</code></p>
+<p>可以看看运行进程，是否多了 <code>tomcat</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@<span class="keyword">default</span>:/<span class="preprocessor"># docker ps -a | grep tomcat</span></span><br><span class="line"><span class="number">356105153</span>a0d      tomcat      <span class="string">"catalina.sh run"</span>     <span class="number">32</span> <span class="function">seconds ago     <span class="title">Exited</span> <span class="params">(<span class="number">130</span>)</span> 21 seconds ago            tomcat</span></span><br></pre></td></tr></table></figure>
+<p>在本机通过 ip 访问，如图：</p>
+<p><img src="http://7xngxf.com1.z0.glb.clouddn.com/docker-tomcat.png" alt=""></p>
+<p>这里的 <code>docker run</code> 是首次运行容器，容器运行后，如果不删除，一直会在进程列表。</p>
+<p>启动容器 <code>docker start [id][name]</code></p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker<span class="variable">@default</span><span class="symbol">:~</span><span class="variable">$ </span>docker start tomcat</span><br><span class="line">tomcat</span><br></pre></td></tr></table></figure>
+<p>停止容器 <code>docker stop [id][name]</code></p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker<span class="variable">@default</span><span class="symbol">:~</span><span class="variable">$ </span>docker stop tomcat</span><br><span class="line">tomcat</span><br><span class="line"></span><br><span class="line">docker<span class="variable">@default</span><span class="symbol">:~</span><span class="variable">$ </span>docker ps -a | grep tomcat</span><br><span class="line"><span class="number">9</span>a27285ccffa      tomcat      <span class="string">"catalina.sh run"</span>      <span class="number">47</span> hours ago     <span class="constant">Exited </span>(<span class="number">143</span>) <span class="number">20</span> seconds ago              tomcat</span><br></pre></td></tr></table></figure>
+<p>可以看到 <code>tomcat</code> 状态变为了 <code>Exited</code></p>
+<p>删除已运行的容器 <code>docker rm [id][name]</code></p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker<span class="variable">@default</span><span class="symbol">:~</span><span class="variable">$ </span>docker rm tomcat</span><br><span class="line">tomcat</span><br><span class="line">docker<span class="variable">@default</span><span class="symbol">:~</span><span class="variable">$ </span>docker ps -a | grep tomcat</span><br></pre></td></tr></table></figure>
+<p>容器列表 <code>tomcat</code> 已经被删除</p>
+<p>查看容器运行日志 <code>docker logs [options] [id][name]</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~$ docker logs --tail -f tomcat</span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.927</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> Server version:        Apache Tomcat/<span class="number">8.0</span><span class="number">.42</span></span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.932</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> Server built:          Mar <span class="number">8</span> <span class="number">2017</span> <span class="number">19</span>:<span class="number">58</span>:<span class="number">16</span> UTC</span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.932</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> Server number:         <span class="number">8.0</span><span class="number">.42</span><span class="number">.0</span></span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.932</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> OS Name:               Linux</span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.932</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> OS Version:            <span class="number">4.4</span><span class="number">.52</span>-boot2docker</span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.933</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> Architecture:          amd64</span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.933</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> Java Home:             /usr/lib/jvm/java-<span class="number">7</span>-openjdk-amd64/jre</span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.933</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> JVM Version:           <span class="number">1.7</span><span class="number">.0</span>_121-b00</span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.933</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> JVM Vendor:            Oracle Corporation</span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.934</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> CATALINA_BASE:         /usr/local/tomcat</span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.934</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> CATALINA_HOME:         /usr/local/tomcat</span><br><span class="line"><span class="number">31</span>-Mar-<span class="number">2017</span> <span class="number">08</span>:<span class="number">30</span>:<span class="number">54.935</span> INFO [main] org.apache.catalina.startup.VersionLoggerListener.<span class="built_in">log</span> Command line argument: -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2><p>本文记录了如何在 Windows7 下安装 <code>Docker</code> ，还有 <code>Docker</code> 的一些入门基本操作。后面会记录具体的应用的部署，以及 <code>Dockerfile</code>的使用。</p>
+<h2 id="参考资料">参考资料</h2><ul>
+<li><a href="http://blog.csdn.net/neilron/article/details/51387161" target="_blank" rel="external">http://blog.csdn.net/neilron/article/details/51387161</a></li>
+<li><a href="https://docs.docker.com/docker-for-windows/install/" target="_blank" rel="external">https://docs.docker.com/docker-for-windows/install/</a></li>
+<li><a href="https://www.gitbook.com/book/yeasy/docker_practice/details" target="_blank" rel="external">https://www.gitbook.com/book/yeasy/docker_practice/details</a></li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag">#docker</a>
+          
+            <a href="/tags/linux/" rel="tag">#linux</a>
+          
+            <a href="/tags/vm/" rel="tag">#vm</a>
+          
+            <a href="/tags/应用服务器/" rel="tag">#应用服务器</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/08/git-remote-push-error-md/" rel="next">Git remote push 报错</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/03/31/windows-install-docker/"
+     data-title="Win7下Docker安装及使用"
+     data-content=""
+     data-url="http://jacob110.github.io/2017/03/31/windows-install-docker/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+                  <div class="ds-thread" data-thread-key="2017/03/31/windows-install-docker/"
+                       data-title="Win7下Docker安装及使用" data-url="http://jacob110.github.io/2017/03/31/windows-install-docker/">
+                  </div>
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/panda.jpg" alt="Jacob Yan" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Jacob Yan</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">明天是你剩余人生的第一天</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jacob110" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/JJ_Jacob" target="_blank">Twitter</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/jacob110" target="_blank">Weibo</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Linkes</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://pinkyjie.com/" target="_blank">进击的马斯特</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker_简介"><span class="nav-number">1.</span> <span class="nav-text">Docker 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker_安装"><span class="nav-number">2.</span> <span class="nav-text">Docker 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装_ToolBox"><span class="nav-number">2.1.</span> <span class="nav-text">安装 ToolBox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加载_boot2docker"><span class="nav-number">2.2.</span> <span class="nav-text">加载 boot2docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Machine"><span class="nav-number">2.3.</span> <span class="nav-text">Docker-Machine</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker_使用"><span class="nav-number">3.</span> <span class="nav-text">Docker 使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jacob Yan</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jacob110"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	  <script type="text/javascript">
+  		var duoshuo_user_ID = jacob110
+  	  </script>
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>
